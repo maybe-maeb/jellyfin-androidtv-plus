@@ -229,6 +229,12 @@ private fun BaseRowItem.getDisplayConfig(imageType: ImageType, uniformAspect: Bo
 		iconRes = R.drawable.ic_tv,
 	)
 
+	BaseRowType.Genre -> BaseRowItemDisplayConfig(
+    aspectRatio = ImageHelper.ASPECT_RATIO_16_9.toFloat(),
+    image = getImage(imageType),
+    iconRes = R.drawable.ic_folder,
+)
+
 	BaseRowType.LiveTvProgram -> BaseRowItemDisplayConfig(
 		aspectRatio = when (imageType) {
 			ImageType.BANNER -> ImageHelper.ASPECT_RATIO_BANNER.toFloat()

@@ -97,6 +97,7 @@ public class BrowseGridFragment extends Fragment implements View.OnKeyListener {
 
     private UUID mParentId;
     private BaseItemDto mFolder;
+    private String mGenre;
     private LibraryPreferences libraryPreferences;
 
     private HorizontalGridBrowseBinding binding;
@@ -144,6 +145,7 @@ public class BrowseGridFragment extends Fragment implements View.OnKeyListener {
 
         mFolder = Json.Default.decodeFromString(BaseItemDto.Companion.serializer(), getArguments().getString(Extras.Folder));
         mParentId = mFolder.getId();
+        mGenre = getArguments().getString(Extras.Genre, null);
         mainTitle = mFolder.getName();
         libraryPreferences = preferencesRepository.getValue().getLibraryPreferences(Objects.requireNonNull(mFolder.getDisplayPreferencesId()));
         mPosterSizeSetting = libraryPreferences.get(LibraryPreferences.Companion.getPosterSize());
@@ -563,8 +565,22 @@ public class BrowseGridFragment extends Fragment implements View.OnKeyListener {
             }
         }
 
-        setRowDef(new BrowseRowDef("", BrowsingUtils.createBrowseGridItemsRequest(mFolder), CHUNK_SIZE_MINIMUM, false, true));
-    }
+if (mGenre != null) {
+    setRowDef(new BrowseRowDef(
+        "",
+        BrowsingUtils.createGenreItemsRequest(mFolder, mGenre),
+        CHUNK_SIZE_MINIMUM,
+        new ChangeTriggerType[]{}
+    ));
+} else {
+    setRowDef(new BrowseRowDef(
+        "",
+        BrowsingUtils.createBrowseGridItemsRequest(mFolder),
+        CHUNK_SIZE_MINIMUM,
+        false,
+        true
+    ));
+}    }
 
     @Override
     public void onResume() {

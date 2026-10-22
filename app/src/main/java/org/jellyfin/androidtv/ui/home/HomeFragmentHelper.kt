@@ -15,6 +15,12 @@ import org.jellyfin.sdk.model.api.request.GetRecommendedProgramsRequest
 import org.jellyfin.sdk.model.api.request.GetRecordingsRequest
 import org.jellyfin.sdk.model.api.request.GetResumeItemsRequest
 import java.time.LocalDateTime
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.jellyfin.sdk.api.client.ApiClient
+import org.jellyfin.sdk.api.client.extensions.genresApi
+import org.jellyfin.sdk.model.api.ItemSortBy
+import org.koin.java.KoinJavaComponent.inject
 
 class HomeFragmentHelper(
 	private val context: Context,
@@ -70,6 +76,8 @@ class HomeFragmentHelper(
 
 		return HomeFragmentBrowseRowDefRow(BrowseRowDef(context.getString(R.string.lbl_next_up), query, arrayOf(ChangeTriggerType.TvPlayback)))
 	}
+
+	fun loadGenres(): HomeFragmentRow = HomeFragmentGenresRow()
 
 	fun loadOnNow(): HomeFragmentRow {
 		val query = GetRecommendedProgramsRequest(

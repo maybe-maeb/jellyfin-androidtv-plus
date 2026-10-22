@@ -15,6 +15,7 @@ enum class HomeSectionType(
 	LATEST_MEDIA("latestmedia", R.string.home_section_latest_media),
 	LIBRARY_TILES_SMALL("smalllibrarytiles", R.string.home_section_library),
 	LIBRARY_BUTTONS("librarybuttons", R.string.home_section_library_small),
+	GENRES("genres", R.string.home_section_genres),
 	RESUME("resume", R.string.home_section_resume),
 	RESUME_AUDIO("resumeaudio", R.string.home_section_resume_audio),
 	RESUME_BOOK("resumebook", R.string.home_section_resume_book),

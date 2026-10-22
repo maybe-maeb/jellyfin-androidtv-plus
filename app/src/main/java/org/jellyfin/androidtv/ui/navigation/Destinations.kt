@@ -45,6 +45,12 @@ object Destinations {
 			putString(Extras.IncludeType, includeType)
 		}
 
+	fun genreBrowser(item: BaseItemDto, genre: String) =
+    fragmentDestination<BrowseGridFragment> {
+        putString(Extras.Folder, Json.encodeToString(item))
+        putString(Extras.Genre, genre)
+    }
+
 	// TODO only pass item id instead of complete JSON to browsing destinations
 	fun librarySmartScreen(item: BaseItemDto) = fragmentDestination<BrowseViewFragment> {
 		putString(Extras.Folder, Json.encodeToString(item))

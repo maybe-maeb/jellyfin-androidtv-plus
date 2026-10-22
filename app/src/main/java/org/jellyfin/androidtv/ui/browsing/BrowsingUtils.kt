@@ -336,4 +336,14 @@ object BrowsingUtils {
 
 		return baseRequest
 	}
+
+	@JvmStatic
+fun createGenreItemsRequest(parent: BaseItemDto, genre: String) = GetItemsRequest(
+    fields = ItemRepository.itemFields,
+    parentId = parent.id,
+    includeItemTypes = setOf(BaseItemKind.MOVIE),
+    genres = setOf(genre),
+    recursive = true,
+    sortBy = setOf(ItemSortBy.SORT_NAME),
+)
 }

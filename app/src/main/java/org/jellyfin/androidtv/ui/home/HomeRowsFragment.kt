@@ -116,6 +116,7 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 				HomeSectionType.RESUME_BOOK -> Unit // Books are not (yet) supported
 				HomeSectionType.ACTIVE_RECORDINGS -> rows.add(helper.loadLatestLiveTvRecordings())
 				HomeSectionType.NEXT_UP -> rows.add(helper.loadNextUp())
+				HomeSectionType.GENRES -> rows.add(helper.loadGenres())
 				HomeSectionType.LIVE_TV -> if (currentUser.policy?.enableLiveTvAccess == true) {
 					rows.add(HomeFragmentLiveTVRow(requireActivity(), userRepository))
 					rows.add(helper.loadOnNow())

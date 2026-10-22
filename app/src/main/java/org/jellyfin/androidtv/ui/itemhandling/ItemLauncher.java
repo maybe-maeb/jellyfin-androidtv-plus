@@ -23,6 +23,7 @@ import org.jellyfin.sdk.model.api.BaseItemDto;
 import org.jellyfin.sdk.model.api.BaseItemKind;
 import org.jellyfin.sdk.model.api.CollectionType;
 import org.koin.java.KoinJavaComponent;
+import org.jellyfin.androidtv.ui.itemhandling.GenreBaseRowItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +69,9 @@ public class ItemLauncher {
 
     public void launch(final BaseRowItem rowItem, MutableObjectAdapter<Object> adapter, final Context context) {
         switch (rowItem.getBaseRowType()) {
+            case Genre:
+            // Implement genre navigation in the next step.
+            break;
             case BaseItem:
                 BaseItemDto baseItem = rowItem.getBaseItem();
                 try {
