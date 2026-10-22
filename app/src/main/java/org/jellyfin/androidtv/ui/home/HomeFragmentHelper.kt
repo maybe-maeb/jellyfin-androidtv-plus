@@ -76,9 +76,7 @@ class HomeFragmentHelper(
 
 		return HomeFragmentBrowseRowDefRow(BrowseRowDef(context.getString(R.string.lbl_next_up), query, arrayOf(ChangeTriggerType.TvPlayback)))
 	}
-
-	fun loadGenres(): HomeFragmentRow = HomeFragmentGenresRow()
-
+	
 	fun loadOnNow(): HomeFragmentRow {
 		val query = GetRecommendedProgramsRequest(
 			isAiring = true,

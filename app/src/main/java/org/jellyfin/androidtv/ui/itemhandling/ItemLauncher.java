@@ -69,9 +69,19 @@ public class ItemLauncher {
 
     public void launch(final BaseRowItem rowItem, MutableObjectAdapter<Object> adapter, final Context context) {
         switch (rowItem.getBaseRowType()) {
-            case Genre:
-            // Implement genre navigation in the next step.
-            break;
+           case Genre:
+    GenreBaseRowItem genreItem = (GenreBaseRowItem) rowItem;
+    BaseItemDto library = genreItem.getBaseItem();
+
+    if (library != null) {
+        navigationRepository.getValue().navigate(
+            Destinations.INSTANCE.genreBrowser(
+                library,
+                genreItem.getGenreName()
+            )
+        );
+    }
+    break;
             case BaseItem:
                 BaseItemDto baseItem = rowItem.getBaseItem();
                 try {

@@ -116,7 +116,7 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 				HomeSectionType.RESUME_BOOK -> Unit // Books are not (yet) supported
 				HomeSectionType.ACTIVE_RECORDINGS -> rows.add(helper.loadLatestLiveTvRecordings())
 				HomeSectionType.NEXT_UP -> rows.add(helper.loadNextUp())
-				HomeSectionType.GENRES -> rows.add(helper.loadGenres())
+				HomeSectionType.GENRES -> Unit
 				HomeSectionType.LIVE_TV -> if (currentUser.policy?.enableLiveTvAccess == true) {
 					rows.add(HomeFragmentLiveTVRow(requireActivity(), userRepository))
 					rows.add(helper.loadOnNow())
@@ -132,8 +132,23 @@ class HomeRowsFragment : RowsSupportFragment(), AudioEventListener, View.OnKeyLi
 				// Add rows in order
 				notificationsRow.addToRowsAdapter(requireContext(), cardPresenter, adapter as MutableObjectAdapter<Row>)
 				nowPlaying.addToRowsAdapter(requireContext(), cardPresenter, adapter as MutableObjectAdapter<Row>)
-				for (row in rows) row.addToRowsAdapter(requireContext(), cardPresenter, adapter as MutableObjectAdapter<Row>)
+for ((index, row) in rows.withIndex()) {
+    row.addToRowsAdapter(
+        requireContext(),
+        cardPresenter,
+        adapter as MutableObjectAdapter<Row>,
+    )
 
+    if (index == 0) {
+        HomeFragmentGenresRow(
+            libraries = userViewsRepository.views.first().toList(),
+        ).addToRowsAdapter(
+            requireContext(),
+            cardPresenter,
+            adapter as MutableObjectAdapter<Row>,
+        )
+    }
+}
 				// Wire up Live TV sibling rows so the On Now row removes the buttons row when empty
 				@Suppress("UNCHECKED_CAST")
 				val rowsAdapter = adapter as MutableObjectAdapter<Row>

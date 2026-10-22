@@ -53,6 +53,11 @@ import org.jellyfin.design.Tokens
 import org.jellyfin.sdk.api.client.ApiClient
 import org.jellyfin.sdk.model.api.BaseItemKind
 import org.koin.compose.koinInject
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.text.BasicText
 
 class CardPresenter(
 	val showInfo: Boolean,
@@ -229,7 +234,7 @@ private fun BaseRowItem.getDisplayConfig(imageType: ImageType, uniformAspect: Bo
 		iconRes = R.drawable.ic_tv,
 	)
 
-	BaseRowType.Genre -> BaseRowItemDisplayConfig(
+BaseRowType.Genre -> BaseRowItemDisplayConfig(
     aspectRatio = ImageHelper.ASPECT_RATIO_16_9.toFloat(),
     image = getImage(imageType),
     iconRes = R.drawable.ic_folder,
@@ -346,39 +351,51 @@ private fun CardViewHolderContent(
 					)
 				}
 			},
-			overlay = {
-				val showInfo = !usePreview && item.showCardInfoOverlay
-				item.baseItem?.let { baseItem ->
-					ItemCardBaseItemOverlay(
-						item = baseItem,
-						footer = {
-							if (showInfo && title != null) {
-								val focusModifier = if (focused) Modifier.basicMarquee(
-									iterations = Int.MAX_VALUE,
-									initialDelayMillis = 0,
-								) else Modifier
+			
+overlay = {
+    val showInfo = !usePreview && item.showCardInfoOverlay
 
-								Box(
-									modifier = Modifier
-										.fillMaxWidth()
-										.background(Tokens.Color.colorBluegrey900.copy(alpha = 0.6f), JellyfinTheme.shapes.extraSmall),
-								) {
-									Text(
-										text = title,
-										maxLines = 1,
-										overflow = TextOverflow.Ellipsis,
-										textAlign = TextAlign.Center,
-										color = Tokens.Color.colorWhite,
-										modifier = Modifier
-											.then(focusModifier)
-											.padding(Tokens.Space.spaceXs),
-									)
-								}
-							}
-						}
-					)
-				}
-			},
+    item.baseItem?.let { baseItem ->
+        if (item.baseRowType == BaseRowType.Genre) {
+            ItemCardBaseItemOverlay(
+                item = baseItem,
+                footer = {
+                    if (showInfo && title != null) {
+                        val focusModifier = if (focused) {
+                            Modifier.basicMarquee(
+                                iterations = Int.MAX_VALUE,
+                                initialDelayMillis = 0,
+                            )
+                        } else {
+                            Modifier
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(
+                                    Tokens.Color.colorBluegrey900.copy(alpha = 0.6f),
+                                    JellyfinTheme.shapes.extraSmall,
+                                ),
+                        ) {
+                            Text(
+                                text = title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                textAlign = TextAlign.Center,
+                                color = Tokens.Color.colorWhite,
+                                modifier = Modifier
+                                    .then(focusModifier)
+                                    .padding(Tokens.Space.spaceXs),
+                            )
+                        }
+                    }
+                },
+            )
+        }
+    }
+},
+
 			modifier = Modifier
 				.size(size)
 		)
